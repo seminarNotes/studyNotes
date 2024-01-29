@@ -72,3 +72,35 @@ sudo visudo
 example ALL=(ALL:ALL) ALL
 ```
 
+
+
+# 정리해야할 것들  
+
+linux setting
+# 1. 우분투 컨테이더 생성
+docker run -d --name ubuntu -p 22:22 -it --privileged ubuntu:22.04
+                                 # --privileged 특정 권한들에 접속
+# 2. 해당 컨터이너에 명령줄로 진입
+docker exec -it ubuntu /bin/bash
+
+# 3. 해당 컨테이너에 기본 환경 설정
+apt-get update 
+apt-get install net-tools vim openssh-server ssh sudo info man-db less psmisc nano
+
+
+
+vi /etc/ssh/sshd_config # 접속
+# /etc/ssh/sshd_config에서 PermitRootLogin이라는 
+# 옵션을 찾아 옆에 있는 값을 yes로 변경해주세요.
+
+[ESC] -> [I] (Insert mode) -> PermitRootLogin yes 세팅
+[ESC] 클릭 -> "ws!" + [Enter] # 저장
+
+>> sudo passwd root  
+# 비밀번호를 지정해주지 않았기때문에 외부 접속용으로 이번 기회에 만들어줍니다
+service ssh start
+
+22번도 ubuntu01의 리눅스, 23번도 ubuntu02의 리눅스 
+# 서버2에서
+>> ssh root@127.0.0.1
+
