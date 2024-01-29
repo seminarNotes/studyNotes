@@ -1,0 +1,361 @@
+ssh woorifisa2@15.164.216.41 -p 22 // $ID@$PI -p $PORT
+
+
+// 옛날 코드
+// USER 만들기
+$ sudo useradd user_example
+
+//  비밀번호 만들기
+$ passwd user_example
+
+// USER 스위칭
+$ su user_example
+
+
+// HOME 디렉터리도 자동으로 만들어짐
+$ adduser user_instance
+$ su user_instance
+
+// 최상위 디렉터리 이동
+$ cd ~ 
+
+
+3. 본인의 권한을 sudo 명령어를 사용할 수 있도록 승격시킨 후
+$ sudo visudo
+ 아래
+user_instance ALL=(ALL:ALL) ALL 
+입력 후 저장
+
+
+vi user_instance.sh
+
+#! bin/sh
+date
+echo $USER
+echo "작성완료"
+
+exit 0 
+:wq
+
+
+저장 후,
+sh user_instance.sh 실행
+
+// ll로 파일 권한 확인
+sudo chmod 777 user_instance.sh
+
+./instance.sh 로 출력
+
+
+############# ElasticSearch
+1. kibana_sample_data_logs 인덱스에 현재 수집된 document의 개수를 확인하는 Query DSL을 작성하시오.
+kibana_sample_data_logs/_search
+검색이 된 document의 수는 hits
+
+kibana_sample_data_logs/_search
+{
+	"size": 0,
+	"agg" : {
+		"unique_ips": {
+			"cardina
+}
+
+
+2. kibana_sample_data_logs 인덱스의 ip 필드에 대한 고유값은 모두 몇 개인지 확인하는 Query DSL을 작성하시오. 해당 값은 ‘unique_ips’라는 속성명을 사용합니다.
+
+
+
+3. kibana_sample_data_logs 인덱스에서 최근 일주일 동안 geo.dest가 CA인 hits 를 구하는 쿼리 DSL을 작성하시오.
+
+
+
+# 1.  kibana_sample_data_logs 인덱스에 현재 수집된 document의 개수를 확인하는 Query DSL을 작성하시오.
+GET kibana_sample_data_logs/_search
+{
+  "size": 1
+}
+
+# 2. kibana_sample_data_logs 인덱스의 ip 필드에  대한 고유값은 모두 몇 개인지 확인하는 Query DSL을 작성하시오.
+GET kibana_sample_data_logs/_search
+{
+ "size": 0,
+  "aggs": {
+    "unique_ips": {
+      "cardinality": {
+        "field": "ip"
+      }
+    }
+  }
+}
+
+# 3.  kibana_sample_data_logs 인덱스에서 최근 일주일 동안 geo.dest가 CA인 hits 를 구하는 쿼리 DSL을 작성하시오.
+
+GET kibana_sample_data_logs/_search
+{
+  "size": 0,
+  "query": {
+    "bool": {
+      "must": [
+        {  
+          "range": {
+           "@timestamp": {
+          "gte": "now-7d/d",
+          "lte": "now/d"
+            }
+          }
+        },
+        {
+          "match": {
+            "geo.dest": "CA"
+          }
+        }
+      ]
+    }
+  }
+}
+
+
+GET _cat/health?v
+// 전반적인 클러스터의 상태 
+GET _cat/indices?v 
+# 인덱스의 종류와 상태 조회
+PUT test2/_doc/1
+{
+  "title": "hello"
+}
+
+GET test2/_search
+
+GET _cat/nodes?v 
+# 각 노드의 이름, 상태 조회
+
+GET _cat/shards?v   
+# 샤드의 상태 조회
+
+GET _cat/recovery?v
+# 진행 중이거나 완료된 샤드 복구 작업 정보 조회
+
+GET _cat/allocation?v 
+# 샤드 할당에 관한 정보 조회
+
+GET _cat/thread_pool?v  
+# 각 노드의 스레드 풀 상태 조회
+
+GET _cat/master?v
+# 현재 마스터로 선출된 노드 확인
+
+# 해당 필드명과 함께 출력하게 하려면 ?v 를 붙이면 됩니다
+http://127.0.0.1:9200/_cat/health?v 
+http://127.0.0.1:9200/_cat/indices?v
+
+GET logs-server1*/_search
+
+
+
+GET _cat/nodes?v
+GET _cat/indices?v
+
+GET _component_template
+
+# 날짜 UNIX으로 받지 않고 ISO  표준으로  받기 위한 설정 - test-mappings
+PUT _component_template/test-mappings
+{
+  "template": {
+    "mappings": {
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        }
+      }
+    }
+  }
+}
+
+GET _ilm/policy
+# Index Lifecycle Management 생성
+PUT _ilm/policy/test-ilm-policy
+{
+  "policy": {
+    "phases": {
+      "hot": {
+        "min_age": "0ms", //  들어오자마자 data_hot으로 관리
+        "actions": {
+          "rollover": {
+            "max_primary_shard_size": "1gb", // 1기가 넘거나
+            "max_age": "30s"  // 들어온지 30초가 지난 데이터
+          }
+        }
+      },
+      "delete": {
+        "min_age": "30s",  // 삭제
+        "actions": {
+          "delete": {
+          }
+        }
+      }
+    }
+  }
+}
+
+# 설정 확인
+GET _ilm/policy/test-ilm-policy
+
+
+# 자주 사용하는 설정들을 template화
+PUT _component_template/test-settings
+{
+  "template": {
+    "settings": {
+      "index.lifecycle.name": "test-ilm-policy",
+      "number_of_shards" : "2",
+      "number_of_replicas" : "1"
+    } 
+  }
+}
+
+get _index_template
+
+# >> 특정 인덱스 패턴으로 들어오는 값에는 template 지정 
+PUT _index_template/test-data-stream-template
+{
+  "index_patterns": ["my-data-stream-*"],
+  "data_stream": {},
+  "composed_of": ["test-mappings", "test-settings"]
+}
+
+# 15초마다 lifecycle 감시하도록 설정
+PUT _cluster/settings
+{
+  "transient": {
+    "indices.lifecycle.poll_interval": "15s"
+  }
+}
+
+# 패턴대로 data stream 생성
+PUT _data_stream/my-data-stream-first
+PUT _data_stream/my-data-stream-second
+# >> 부분에서 넣은 설정이 반영된 것 확인
+GET my-data-stream-second
+
+POST my_index/_doc/1
+{
+  "phone":"123-456"
+}
+
+# data-stream 시계열데이터 - create 
+# 값 삽입 -> 30초 후에 삭제되는지 확인
+PUT my-data-stream-first/_create/1
+{
+  "hello": "world",
+  "@timestamp": "2024-01-05T12:31:45.003Z"
+}
+
+PUT my-data-stream-first/_create/3
+{
+  "hello": "world2",
+  "@timestamp": "2024-01-05T12:31:45.003Z"
+}
+
+# 삭제됨
+GET my-data-stream-first/_search
+
+DELETE _data_stream/my-data-stream-first
+
+
+
+
+
+PUT _component_template/test-mappings
+{
+  "template": {
+    "mappings": {
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        }
+      }
+    }
+  }
+}
+
+# Index Lifecycle Management 생성
+PUT _ilm/policy/test-ilm-policy
+{
+  "policy": {
+    "phases": {
+      "hot": {
+        "min_age": "0ms", //  들어오자마자 data_hot으로 관리
+        "actions": {
+          "rollover": {
+            "max_primary_shard_size": "1gb", // 1기가 넘거나
+            "max_age": "30s"  // 들어온지 30초가 지난 데이터
+          }
+        }
+      },
+      "delete": {
+        "min_age": "30s",  // 삭제
+        "actions": {
+          "delete": {
+          }
+        }
+      }
+    }
+  }
+}
+
+# 설정 확인
+GET _ilm/policy/test-ilm-policy
+
+
+# 자주 사용하는 설정들을 template화
+PUT _component_template/test-settings
+{
+  "template": {
+    "settings": {
+      "index.lifecycle.name": "test-ilm-policy",
+      "number_of_shards" : "2",
+      "number_of_replicas" : "1"
+    } 
+  }
+}
+
+# >> 특정 인덱스 패턴으로 들어오는 값에는 template 지정 
+PUT _index_template/test-data-stream-template
+{
+  "index_patterns": ["my-data-stream-*"],
+  "data_stream": {},
+  "composed_of": ["test-mappings", "test-settings"]
+}
+
+# 15초마다 lifecycle 감시하도록 설정
+PUT _cluster/settings
+{
+  "transient": {
+    "indices.lifecycle.poll_interval": "15s" 
+  }
+}
+
+# 패턴대로 data stream 생성
+PUT _data_stream/my-data-stream-first
+
+# >> 부분에서 넣은 설정이 반영된 것 확인
+GET my-data-stream-first
+
+# 값 삽입 -> 30초 후에 삭제되는지 확인
+PUT my-data-stream-first/_create/1
+{
+  "hello": "world",
+  "@timestamp": "2024-01-05T12:31:45.003Z"
+}
+
+PUT my-data-stream-first/_create/2
+{
+  "hello": "world2",
+  "@timestamp": "2024-01-05T12:31:45.003Z"
+}
+
+# 삭제됨
+GET my-data-stream-first/_search
+
+DELETE _data_stream/my-data-stream-first
+
