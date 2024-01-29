@@ -359,3 +359,118 @@ GET my-data-stream-first/_search
 
 DELETE _data_stream/my-data-stream-first
 
+
+
+====/===
+
+
+C:\Users\junhui> 경로도 cmd을 실행해서
+
+1. ubuntu
+2. source py_af/bin/activate
+3. airflow db init
+4. airflow webserver --port 9090 
+
+1. ubuntu
+2. source py_af/bin/activate
+3. airflow scheduler
+
+
+
+
+# docker commit 컨테이너명 새로운이미지명
+docker commit ubuntu ubuntu_study
+
+docker images
+
+# repository와 일치하도록 변경
+docker image tag <image id> <repository/imagename>
+docker image tag ubuntu_study atangi/ubuntu_study
+docker push atangi/ubuntu_study
+
+# 컨테이너 생성
+$ docker run -d --name ubuntu -p 22:22 -it --privileged ubuntu:22.04
+                                 # --privileged 특정 권한들에 접속
+                                 
+                                 
+
+# 컨테이너 실행
+$ docker exec -it ubuntu /bin/bash
+
+# ssh 접속 허용
+$ service ssh start 
+
+1. ubuntu_study라는 이름, 23번을 사용해서 컨테이너로 실행해보시고
+ docker run -d --name ubuntu_study -p 23:22 -it --privileged atangi/ubuntu_study3
+2. docker ps 명령어로 실제로 실행중인지 확인 
+docker ps
+3. exec 명령어로 해당 컨테이너 내부로 CLI를 확인해서 진입해보세요 
+docker exec -it ubuntu_study /bin/bash
+4. su user01 
+
+
+
+# Post1 : Airflow 
+최초 작성일 : 2023-12-21  
+마지막 수정일 : 2023-12-21
+  
+## 0. Overview
+Airflow에 대해 설명하는 글이다. 
+
+## Table of Contents
+1. [Introduction](#1.-Introduction)
+
+
+## 1. Introduction 
+
+고객생애가치 LTV는 'Life-Time
+
+`
+
+1. Operator
+특정 행위를 할 수 있도록 기능을 모아 놓은 클래스, 설계도
+Bash, Python, S3, GCS Operator를 실행할 수 있게 해주는 Operator
+2. Task
+오퍼레이터에서 객체화(인스턴스화)되어 DAG에서 실행 가능한 오브젝트 
+3. Bash 오퍼레이터
+
+
+도커 이미지 다운만 받기
+docker pull [이미지명]:[태그]
+
+컴퓨터 내 도커 이미지들 보기
+docker image
+
+docker create [옵션] [이미지명]:[태그]
+ex ) docker create -it python
+
+만들어진 컨테이너 시작하기
+docker start [컨테이너 id 또는 이름]
+
+컨테이너로 들어가기
+docker attach [컨테이너 id 또는 이름]
+
+컨테이너 조회
+docker ps
+
+모든 컨테이너 조회하기
+docker ps -a
+
+
+
+
+docker hub에서는 개발할 때 필요한 것을 image로 찾을 수 있다 
+docker image는 리늑스 컴퓨터의 특정 상태를 캡쳐해서 박제 
+리눅스에 특정 프로그램이 설치된 상태를 급속 냉동해서 클라우드에 올려놓은 것
+
+docker run -it [특정도구]
+컴퓨터는 일단 로컬에서 이미지를 찾아보고 없으면
+docker hub에 가서 이미지를 다운한다.
+run 명령어는 local에서 이미지를 찾고, 없으면 다운 후, 내 컴퓨터에서 컨테이너를 만든다. 이미지를 한번만 다운하면, 그것으로 컨테이너를 몇 개든 만들 수 있다.
+이미지는 컨테이너를 만드는 틀 또는 컨테이너 조립 키트
+
+-it, 컨테이너를 연 다음 그 환경 안에서 CLI를 사용한다는 옵션
+
+
+
+
