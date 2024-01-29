@@ -1,0 +1,161 @@
+도커 파일(Docker File) 
+- 도커 파일은 도커 이미지를 생성하기 위한 설정 파일
+- 텍스트 파일로 작성 
+
+도커 컴포즈
+- 도커 컨테이너를 여러개
+
+
+도커 이미지(Docker Image)
+- 도커 이미지는 컨테이너를 실행에 필요한 파일 및 설정을 포함하는 패키지
+- 컨테이너를 실행하는 데 사용
+- 이미지는 읽기 전용
+- 이미지에 설정한 정보를 얹어서 사용 = 
+
+
+도커 허브(Docker Hub)
+- 도커 이미지를 공유하고 저장하는 공식 저장소
+- 도커 허브에서 이미지를 가져와 사용할 수 있음
+- 도커 허브는 도커 이미지를 중앙에서 관리하고 배포하기 위핸 플랫폼
+
+컨테이너 
+- 도커 이미지를 실행한 상태로, 격리된 환경에서 App 동작
+- 이미지를 기반으로 생성, 각 컨테이너는 자체 파일 시스템과 프로세스를 가짐
+
+
+1. 도커 파일과 도커 이미지
+
+
+엘라스티 서치 실행
+
+엘라스티 서치 조회(서버)
+http://localhost:9200/
+
+키바나 실행 
+
+키바나 실행
+
+접속
+
+아래 management 
+>> Dev Tool
+
+
+터미널에다가 입력
+net stop winnat
+net start winnat
+어제 사용했던 port를 정하는 것
+
+
+
+https://www.elastic.co/kr/downloads/logstash
+
+
+
+
+logstash 실행
+
+PS C:\ITStudy\ELK> CD logstash
+PS C:\ITStudy\ELK\logstash> echo "from command line" | bin\logstash.bat -f config\logstash-pipeline-2.conf
+
+
+
+그록 패턴 예제
+55.3.244.1 GET /index.html 15824 0.043
+%{IP:client} %{WORD:method} %{URIPATHPARAM:request} %{NUMBER:bytes} %{NUMBER:duration}
+
+>>
+{
+  "duration": "0.043",
+  "request": "/index.html",
+  "method": "GET",
+  "bytes": "15824",
+  "client": "55.3.244.1"
+}
+
+
+
+logstash 실행
+PS C:\ITStudy\ELK\logstash> bin\logstash.bat -f config\logstash-pipeline-3.conf
+
+
+콘솔 실행
+get logs_multiline-2024.01.05/_search
+{
+  "size" : 2
+}
+
+
+
+# 파이썬 인터프리터 선택
+$ pip install flask
+
+
+$ python flask_server1.py --logger 2> "server1.log"
+
+$ python flask_server2.py --logger 2> "server2.log"
+
+
+
+
+
+filebeat:
+  inputs:
+    - type: log
+      enabled: true
+      paths:
+        - 로그가 수집되는 파일 경로 1
+        - 로그가 수집되는 파일 경로 2
+output.logstash:
+  hosts: ["localhost:5044"]
+
+입력 후, filebeat이 있는 경로에서 
+
+# -e 옵션은 env error 
+# -c config 
+$ filebeat -e -c filebeat.yml  
+
+
+
+GET _cat/health  # 전반적인 클러스터의 상태 
+GET _cat/indices  # 인덱스의 종류와 상태 조회
+GET _cat/nodes  # 각 노드의 이름, 상태 조회
+GET _cat/shards   # 샤드의 상태 조회
+GET _cat/recovery  # 진행 중이거나 완료된 샤드 복구 작업 정보 조회
+GET _cat/allocation  # 샤드 할당에 관한 정보 조회
+GET _cat/thread_pool  # 각 노드의 스레드 풀 상태 조회
+GET _cat/master  # 현재 마스터로 선출된 노드 확인
+
+PS C:\ITStudy\ELK> cd server1 
+PS C:\ITStudy\ELK\server1> cd filebeat
+PS C:\ITStudy\ELK\server1\filebeat> filebeat -e -c filebeat.yml
+
+PS에서 실행할 때는 확장자 포함해서 실행해줄 것 .\filebeat.exe -e -c filebeat.yml 
+
+
+
+데이터 생명 주기
+HOT 자주 검색, 최근 검색
+WARM 빈도는 낮지만, 여전히 유의미한
+COLD 관리할 필요가 있는 데이터
+FREEZE 거의 사용할 일이 없는 
+
+
+
+
+
+PS C:\ITStudy\ELK\logstash> bin\logstash.bat -f config\logstash-from-server1.conf
+logstash 실행
+
+
+
+
+
+
+pip install -r requirements.txt
+
+(HOST, USER, PASSWORD, DATABASE) = ('localhost', 'root', 'woojh', 'mywork')
+
+    
+
+
