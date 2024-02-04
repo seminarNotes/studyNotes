@@ -1,3 +1,5 @@
+## hadoop 설치  
+
 ssh woorifisa2@15.164.216.41 -p 22 // $ID@$PI -p $PORT
 
 
