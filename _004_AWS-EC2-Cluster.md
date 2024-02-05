@@ -8,7 +8,8 @@
 Amazon Elastic Compute Cloud (Amazon EC2)는 Amazon Web Services (AWS) 클라우드 플랫폼에서 제공하는 가상 서버 서비스이다. Amazon EC2를 사용하면 필요에 따라 가상 컴퓨팅 리소스를 프로비저닝하고, 운영체제를 선택하며, 애플리케이션을 배포하고 실행할 수 있다. 밑의 설명은 최초 작성일 기준, AWS home의 UI와 Hadoop, Spark 버전을 기준으로 작성한다. 따라서, 얼마든지 UI와 Framework의 버전이 달라질 수 있다는 점을 유의해야 한다. Framework의 버전을 확인하고 설치하는 과정은 뒷 과정에서 별도 설명한다. 아래에는 EC2 위에tj
 
 ## Table of Contents
-1. [Introduction to Docker](#1.-Introduction-to-Docker)
+1. [Set up on AWS](#1.-Set-up-on-AWS)
+2. [SSH and Host Configuration](#2.-SSH-and-Host-Configuration)
 
 ## 1. Introduction to Docker  
 
@@ -29,7 +30,7 @@ Amazon Elastic Compute Cloud (Amazon EC2)는 Amazon Web Services (AWS) 클라우
 
 
 
-
+## 2. SSH and Host Configuration
 
 
 ssh conf 파일을 수정해서, 지정한 hostname으로 쉽게 서버를 접속할 수 있게 세팅한다. 먼저, 키를 관리하고 보관할 수 있는 디렉터리를 하나 생성하고 다운로드 받은 키를 해당 디렉터리에 이동시킨다.
@@ -68,14 +69,39 @@ Host master
 ``` bash
 $ chmod 440 ~/.ssh/config
 ```
-이 후, master라는 hostname을 통해, 서버에 접속할 수 있는지 hostname을 호출하여, 해당 서버에 접속한다.
+이 후, master라는 hostname을 통해, 서버에 접속할 수 있는지 hostname을 호출하여, 해당 서버(인스턴스)에 접속한다.
 ``` bash
 $ ssh master
 ```
+ip addr를 통해, AWS 내 instance에 있는 private ip가 동일한지 확인하고, 아무 문제 없다면, 필요한 Framework를 설치할 준비를 한다.
+``` bash
+# private ip 확인
+$ ip addr
 
+$ sudo apt-get -y update
+$ sudo apt-get -y upgrade
+$ sudo apt-get -y dist-upgrade
+```
 
+필요한 라이브러리부터 설치한다.
+``` bash
+$ sudo apt-get install -y vim
+$ sudo apt-get install -y wget
+$ sudo apt-get install -y unzip
 
+$ sudo apt-get install -y ssh
+$ sudo apt-get install -y openssh-*
+$ sudo apt-get install -y net-tools
+```
 
+hadoop과 spark는 자바를 기반으로 만들어진 프레임워크이기 때문에 필수적으로 java가 설치되어 있어야 한다. 설치된 이후에는 자바의 버전을 확인한다.
+``` bash
+sudo apt-get install -y oepnjdk-8-jdk
+
+$ java -version
+```
+
+[여기까지 작성했습니다.] ////
 
 
 
