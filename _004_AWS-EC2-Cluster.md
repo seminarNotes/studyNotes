@@ -52,13 +52,15 @@ $ ls -ltrh ~/.ssh
 ```
 해당 경로에 config 파일을 vim을 통해 파일을 연다.
 ``` bash
+$ cd ~/.ssh
+
 $ sudo vim config
 ```
 Host에는 호출명, HostName에는 Public IP, User에는 ubuntu, IdentiyFile에는 pem 파일의 경로를 작성한다.
 
 ``` config
 Host master
-  HostName 000.000.000.001
+  HostName [PUBLIC KEY]
   User ubuntu
   IdentityFile ~/identity/keypair_aws.pem
 ```
