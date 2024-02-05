@@ -269,67 +269,59 @@ docker push mysql:5.7
 ### 3-2. Commands for Containers
 Docker는 이미지(image)를 통해 애플리케이션 및 환경을 패키징하고, 이 이미지를 Docker Hub와 같은 Docker 레지스트리에서 다른 사람들과 공유하며, 로컬 머신으로 이미지를 가져와서 컨테이너(container)로 실행하는 구조이다. 따라서, 맨 처음 image에 대한 기본적인 command에 대해서 알아보자.
 
+#### 3-2-1. List Containers
+Docker를 나열하는 명령어는 ls(list) 또는 ps(process status)를 사용한다. 두 명령어는 동일한 역할로, Docker 컨테이너를 나열하고 관리하는데 사용되며, 두 명령 모두 실행 중인 Docker 컨테이너 목록을 표시한다. 이 때, container는 생략이 가능하기 때문에 실행 중인 Docker container를 조회하는 명령어는 아래와 같다. 
 
+```bash
+docker container ls
+docker container ps
+docker ls
+docker ps
+```
 
+한편, 중지된 컨테이너를 포함하여 모든 컨테이너를 표시하도록 하는 명령어는 -a(all)이라는 옵션을 사용하고, 가장 최근에 생성된 컨테이너 순서대로 정렬하는 명령어로는 -l(list)의 옵션을 자주 사용한다. 이들을 이용하여, container의 목록을 표시하기 위한 명령어는 아래와 같다.
 
+```bash
+docker container ls -al
+docker container ps -al
+docker ls -al
+docker ps -al
+```
 
-3-1-1. 컨테이너 조
-
-
-# 컨테이너 이름 또는 ID 확인
-
-
-# 컨테이너 실행
+#### 3-2-2. Run a Container  
 ```bash
 docker start <CONTAINER_ID>
 ```
-
-
-
-# 컨테이너 종료
+#### 3-2-3. Stop a Container
 실행 중인 컨테이너를 종료하는 코드는 아래와 같다.
 ```bash
 docker stop <CONTAINER_ID>
 ```
 
-
-실행 중인 컨테이너를 종료 / 강제 종료할 때,
 ```bash
 docker stop $(docker ps -q)
 
 docker kill $(docker ps -q)
 ```
+#### 3-2-4. Remove a Container
 
-# 컨테이너 조회
-
-```bash
-docker container ls
+컨테이너의 파일 시스템과 설정 정보가 모두 삭제
 ```
-현재 시스템에서 실행 중인 모든 Docoker 컨테이너 목록을 표시
-```bash
-docker container ls -a
+$ docker rm <CONTAINER_ID>
 ```
-중지된 컨테이너도 포함하여 모든 컨테이너를 표시
-
-# 실행 중인 Docker 컨테이너에 접속하며, 컨테이너 내부 터미널에 연결
-```bash
-docker attach <CONTAINER_ID>
-```
-
-# 이미지를 사용하여 새로운 컨테이너를 실행
+#### 3-2-5. Inspace a Container
+#### 3-2-6. View Container Logs
+#### 3-6-7. Attach to Terminal for Container  
 ```bash
 docker run <CONTAINER_ID>
 ```
 docker 이미지를 사용해서 새로운 컨테이너를 실행하면서, 대화형 터미널로 컨테이너 내부에 연결
 ```bash
+docker attach <CONTAINER_ID>
+```
+
+```bash
 docker run -it <CONTAINER_ID>
 ```
-
-# 컨테이너 삭제
-```
-$ docker rm <CONTAINER_ID>
-```
-컨테이너의 파일 시스템과 설정 정보가 모두 삭제
-
 
 
