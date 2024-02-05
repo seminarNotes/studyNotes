@@ -29,6 +29,13 @@ Amazon Elastic Compute Cloud (Amazon EC2)는 Amazon Web Services (AWS) 클라우
 
 
 
+
+
+
+ssh conf 파일을 수정해서, 지정한 hostname으로 쉽게 서버를 접속할 수 있게 세팅한다.
+
+
+
 shift + g
 
 AWS EC2 - Aphace hadoop, spark cluster 구축
