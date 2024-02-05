@@ -44,12 +44,29 @@ $ chmod 600 keypair_aws.pem
 ```
 ssh-kygen으로 ssh key를 생성한다.
 ``` bash
-ssh-keygen
+$ ssh-keygen
 ```
 ~/.ssh 디렉터리에 정상적으로 공개키(pub)가 생성되었음을 확인할 수 있다.
 ``` bash
-ls -ltrh ~/.ssh
+$ ls -ltrh ~/.ssh
 ```
+해당 경로에 config 파일을 vim을 통해 파일을 연다.
+``` bash
+$ vim config
+```
+
+``` config
+Host master
+  HostName 000.000.000.001
+  User ubuntu
+  IdentityFile ~/identity/keypair_aws.pem
+```
+작성 후 파일을 저장한다.
+
+
+
+
+
 
 
 shift + g
