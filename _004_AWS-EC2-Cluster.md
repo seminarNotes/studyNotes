@@ -11,15 +11,18 @@ Amazon Elastic Compute Cloud (Amazon EC2)는 Amazon Web Services (AWS) 클라우
 1. [Introduction to Docker](#1.-Introduction-to-Docker)
 
 ## 1. Introduction to Docker  
-Docker는 컨테이너화 기술을 기반으로 하는 오픈 소스 플랫폼으로, 애플리케이션을 패키징하고 실행하는 데 활용된다.  Docker는 애플리케이션과 그 의존성을 격리된 환경인 "컨테이너"에 포장하여 이식성을 높이고, 환경 간에 쉽게 배포 및 실행할 수 있다는 장점이 존재한다.
 
-### 1-1. Docker Object
-#### 1-1-1. Docker Daemon  
-- Docker 컨테이너를 관리하고 실행하는 핵심 배경 프로세스
-- Docker API 요청을 수신하고, 이미지, 컨테이너, 리소스, 네트워크 및 불륨과 같은 Docker 객체를 관리
-- 컨테이너가 정상적으로 수행될 수 있게 실행 환경 제공
-- 컨테이너 빌드, 실행 및 배포와 같이 Docker 클라이언트로 전송된 명령을 실제 실행
+[EC2] 검색 - [인스턴스] - [인스턴스 시작] 
+이미지는 Ubuntu Server 20.04 LTS, 64bit(x86) 그리고 Free tier를 사용하기 위해 t2.micro 유형을 선택한다.
 
-#### 1-1-2. Docker Client  
-- Docker Client는 Docker 컨테이너와 상호작용하는 사용자 인터페이스를 제공하는 도구 또는 프로그램
-- Docker 컨테이너와 이미지를 관리하고, Docker 호스트 또는 Docker Daemon과 통신하여 컨테이너를 관리하고 다양한 Docker 작업을 수행
+[스토리지 구성] 내 사용할 수 있는 root 볼륨이 있는데, 사용자의 조건에 맞게 작성하면 된다. 아래 실습에서는 15GiB를 선택했다.
+
+[이름 및 태그] 내 [추가 태그 추가] 눌러 key, value 값을 지정할 수 있다. (key : value) = (admin : seminarnotes)라 입력하였다.
+
+[네트워크 설정] 내에서 네트워크 설정과 보안 설정을 해야한다. 자신이 사용해야 하는 IP를 설정 해야 하지만, 나는 기본 세팅 그대로를 두고 넘어갔다.
+
+인스턴스 생성의 마지막 단계로, [키 페어(로그인)]을 설정한다. [새 키 페어 생성] 눌러 새로운 key pair를 생성하고,
+
+[키 페어 이름]은 keypair_aws, [키 페어 유형]은 RSA, 프라이빗 키 파일 형식은 .pem으로 지정하여, [키 페어 생성]을 클릭했다.
+
+이 후, 인스턴스가 생성되고, [인스턴스 상태]가 실행 중으로 보이면, 정상적으로 EC2가 생성된 것이다.
