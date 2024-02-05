@@ -26,3 +26,204 @@ Amazon Elastic Compute Cloud (Amazon EC2)는 Amazon Web Services (AWS) 클라우
 [키 페어 이름]은 keypair_aws, [키 페어 유형]은 RSA, 프라이빗 키 파일 형식은 .pem으로 지정하여, [키 페어 생성]을 클릭했다.
 
 이 후, 인스턴스가 생성되고, [인스턴스 상태]가 "대기 중"에서 "실행 중"으로 변경되면, 정상적으로 EC2가 생성/실행된 것이다.
+
+
+
+shift + g
+
+AWS EC2 - Aphace hadoop, spark cluster 구축
+
+
+``` bash
+$ sudo vim /usr/local/hadoop/etc/hadoop/core-site.xlm
+```
+
+
+``` xml
+<configuration>
+    <property>
+            <name>fs.default.name</name>
+            <value>hdfs://mastet:9000</value>
+    </property>
+</configuration>
+```
+
+
+``` bash
+$ sudo vim /usr/local/hadoop/etc/hadoop/hdfs-site.xlm
+```
+``` xml
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>3</value>
+    </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file:///hdfs_dir/nameNode</value>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>file:///hdfs_dir/dataNode</value>
+    </property>
+    <property>
+        <name>dfs.namenode.secondary.http-address</name>
+        <value>worker01:50090</value>
+    </property>
+</configuration>
+```
+
+
+``` bash
+$ sudo vim /usr/local/hadoop/etc/hadoop/yarn-site.xlm
+```
+``` xml
+<configuration>
+    <!-- Site specific YARN configuration properties -->
+    <property>
+        <name>yarn.nodemanager.local-dirs</name>
+        <value>file:///hdfs_dir/yarn/local</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.log-dirs</name>
+        <value>file:///hdfs_dir/yarn/logs</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>master</value>
+    </property>
+</configuration>
+```
+
+```bash
+$ sudo vim /usr/local/hadoop/etc/hadoop/mapred-site.xlm
+```
+``` xml
+<configuration>
+    <property>
+    <!-- mapreduce framework named as yarn -->
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+    </property>
+</configuration>
+```
+
+```bash
+$ sudo vim /usr/local/hadoop/etc/hadoop/hadoop-env.sh
+```
+
+``` sh
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export HDFS_NAMENODE_USER="root"
+export HDFS_DATANODE_USER="root"
+export HDFS_SECONDARYNAMENOTE_USER="root"
+export YARN_RESOURCEMANAGER_USER="root"
+export YARN_NODEMANAGER_USER="root"
+```
+
+
+
+
+스파크 환경설정
+
+spark는 /usr/local/spark/conf$로 이동했을 때, 모든 conf가 template으로 구성되어 있다. 그래서 바로 수정하지 않고, 해당 template를 복사한다.
+
+``` bash
+$ sudo cp spark-defaults.conf.template spark-defaults.conf
+$ suco vim spark-defaults.conf
+```
+``` conf
+spark.master                yarn
+spark.eventLog.enabled      true
+spark.eventLog.dir          hdfs://namenode:8021/spark_enginelog
+```
+
+
+``` bash
+$ sudo cp spark-env.sh.template spark-env.sh
+$ sudo vim spark-env.sh
+```
+
+``` sh
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export SPARK_MASTER_HoST=master
+export HADOOP_HOME=/usr/local/hadoop
+export YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+```
+
+인스턴스 >> 작업 >> 이미지 및 템플릿 >> 이미지 생성
+
+이미지 이름 :  spark_hadoop_base
+이미 설명 : spark_hadoop
+
+
+Amazon Machine Images(AMI)
+이미지 >> AMI
+
+AMI로 인스턴스 시작
+
+다른 설정은 모두 동일하지만
+
+키 페어(로그인)의 경우, 맨 처음 생성하였던 키 페어 "spark_hadoop_aws"를 선택
+이 후, [인스턴스 시]
+
+[이미지] >> [AMI]
+
+
+
+``` bash 
+cd ~/.ssh
+ls -ltrh
+sudo vim config
+```
+여기서 ssh와 관련된 설정 
+
+
+
+``` bash
+sudo hostnamectl set-hostname master
+hostname
+>> master
+
+sudo sudo vim /etc/hosts
+```
+
+각 worker의 inet ip를 작성한다. 서버끼리 통신할 때는 public ip가 아닌 private ip를 사용한다.
+
+
+``` cong
+ip addr
+
+
+```
+
+``` bash
+sudo hostnamectl set-hostname worker01
+```
+``` bash
+sudo hostnamectl set-hostname worker02
+```
+``` bash
+sudo hostnamectl set-hostname worker03
+```
+이름을 다 변경하고, 각 터미널에 hosts 파일 수정
+
+``` bash
+sudo vim /etc/hosts
+```
+
+
+
+
+
+
+
+
+############# docker
+리눅스의 응용 프로그램들을 SW 컨테이너 내에서 배치하는 작업을 자동화 하는 오픈 소스 프로젝트  
+
+client와 server 아키텍처
+
+
+
