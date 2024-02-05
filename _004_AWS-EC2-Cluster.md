@@ -32,8 +32,24 @@ Amazon Elastic Compute Cloud (Amazon EC2)는 Amazon Web Services (AWS) 클라우
 
 
 
-ssh conf 파일을 수정해서, 지정한 hostname으로 쉽게 서버를 접속할 수 있게 세팅한다.
+ssh conf 파일을 수정해서, 지정한 hostname으로 쉽게 서버를 접속할 수 있게 세팅한다. 먼저, 키를 관리하고 보관할 수 있는 디렉터리를 하나 생성하고 다운로드 받은 키를 해당 디렉터리에 이동시킨다.
+``` bash
+$ mkdir -p ~/identity
 
+$ cd ~/identity
+```
+해당 키를 너무 오픈 되어 있으면, 취약 진단으로 작업에 장애가 생길 수 있기 때문에 change mode를 실행한다.
+``` bash
+$ chmod 600 keypair_aws.pem
+```
+ssh-kygen으로 ssh key를 생성한다.
+``` bash
+ssh-keygen
+```
+~/.ssh 디렉터리에 정상적으로 공개키(pub)가 생성되었음을 확인할 수 있다.
+``` bash
+ls -ltrh ~/.ssh
+```
 
 
 shift + g
