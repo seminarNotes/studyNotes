@@ -78,7 +78,7 @@ sudo docker run hello-world
 
 ## 3. Basic Docker Commands  
 ### 3-1. Commands for images
-Docker는 이미지(image)를 통해 애플리케이션 및 환경을 패키징하고, 이 이미지를 Docker Hub와 같은 Docker 레지스트리에서 다른 사람들과 공유하며, 로컬 머신으로 이미지를 가져와서 컨테이너(container)로 실행하는 구조이다. 따라서, 맨 처음 image에 대한 기본적인 command에 대해서 알아보자.
+Docker는 이미지(image)를 통해 애플리케이션 및 환경을 패키징하고, 이 이미지를 Docker Hub와 같은 Docker 레지스트리에서 다른 사람들과 공유하며, 로컬 머신으로 이미지를 가져와서 컨테이너(container)로 실행하는 구조이다. 또한, 컨테이너 실행 환경을 정의하고 패키징하는 데 사용된다. 
 
 #### 3-1-1. Docker Registry에서 이미지 조회  
 검색어(SEARCH_KEYWORD)를 사용하여 이미지를 찾고 해당 이미지의 이름, 설명 등을 확인할 수 있다. 예를 들어, mysql에 대한 이미지를 조회하면 다음과 같은 출력을 확인 할 수 있다.
@@ -313,46 +313,6 @@ docker run -it <CONTAINER_ID>
 $ docker rm <CONTAINER_ID>
 ```
 컨테이너의 파일 시스템과 설정 정보가 모두 삭제
-
-## 4. Images
-Docker 이미지는 컨테이너 실행 환경을 정의하고 패키징하는 데 사용된다. 따라서, 실행시키고자하는 container가 있다면, images를 생성하거나, local 환경으로 pull을 하는 행동이 선행되어야 할 것이다. 
-
-### 4-1. 사용 가능한 이미지 조회  
-먼저, 사용하고자 하는 이미지를 찾는 방법은 search 명령어를 사용하는 것이다.
-``` 
-$ docker search [검색어]
-```
-예를 들어, ubuntu를 사용하기 위해, ubuntu의 image를 검색하면 아래와 같이 출력된다.
-```
-$ docker search ubuntu
-NAME                             DESCRIPTION                                      STARS     OFFICIAL   AUTOMATED
-ubuntu                           Ubuntu is a Debian-based Linux operating sys…   16842     [OK]
-websphere-liberty                WebSphere Liberty multi-architecture images …   296       [OK]
-open-liberty                     Open Liberty multi-architecture images based…   62        [OK]
-neurodebian                      NeuroDebian provides neuroscience research s…   106       [OK]
-ubuntu-debootstrap               DEPRECATED; use "ubuntu" instead                 52        [OK]
-ubuntu-upstart                   DEPRECATED, as is Upstart (find other proces…   115       [OK]
-ubuntu/nginx                     Nginx, a high-performance reverse proxy & we…   111
-ubuntu/squid                     Squid is a caching proxy for the Web. Long-t…   79
-ubuntu/cortex                    Cortex provides storage for Prometheus. Long…   4
-ubuntu/prometheus                Prometheus is a systems and service monitori…   56
-ubuntu/apache2                   Apache, a secure & extensible open-source HT…   70
-ubuntu/kafka                     Apache Kafka, a distributed event streaming …   38
-ubuntu/bind9                     BIND 9 is a very flexible, full-featured DNS…   73
-ubuntu/mysql                     MySQL open source fast, stable, multi-thread…   58
-ubuntu/zookeeper                 ZooKeeper maintains configuration informatio…   12
-ubuntu/postgres                  PostgreSQL is an open source object-relation…   34
-ubuntu/redis                     Redis, an open source key-value store. Long-…   22
-ubuntu/jre                       Distroless Java runtime based on Ubuntu. Lon…   13
-ubuntu/dotnet-aspnet             Chiselled Ubuntu runtime image for ASP.NET a…   17
-ubuntu/grafana                   Grafana, a feature rich metrics dashboard & …   9
-ubuntu/dotnet-deps               Chiselled Ubuntu for self-contained .NET & A…   13
-ubuntu/memcached                 Memcached, in-memory keyvalue store for smal…   5
-ubuntu/dotnet-runtime            Chiselled Ubuntu runtime image for .NET apps…   14
-ubuntu/prometheus-alertmanager   Alertmanager handles client alerts from Prom…   9
-ubuntu/cassandra                 Cassandra, an open source NoSQL distributed …   2
-```
-
 
 
 
