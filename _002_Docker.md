@@ -289,20 +289,45 @@ docker ps -al
 ```
 
 #### 3-2-2. Run a Container  
+컨테이너를 실행하는 명령어는 docker run 또는 docker start가 있다. 하지만, docker start는 이미 생성된 컨테이너를 실행하는데 반면에, docker run은 새로운 컨테이너를 생성하고 시작하는 명령어이다. 
 ```bash
+# IMAGE_ID만 가능
+# 새로운 CONTAINER 인스턴스가 생성
+docker run <IMAGE_ID>
+
+# IMAGE_ID / CONTAINER_ID 모두 가능
+docker start <IMAGE_ID>
 docker start <CONTAINER_ID>
 ```
-#### 3-2-3. Stop a Container
-실행 중인 컨테이너를 종료하는 코드는 아래와 같다.
+docker run <IMAGE_ID>을 사용하면, 기존의 컨테이너를 삭제되지 않고,  이미지 이름을 기반으로 새로운 컨테이너가 생성되고 실행된다. 기존의 컨테이너가 있더라도 새로운 컨테이너 인스턴스를 실행한다. 반면, docker start는 기존의 컨테이너를 실행하기 때문에, IMAGE_ID/CONTAINER_ID를 모두 사용하여, 특정 CONTAINER를 타겟팅하여 실행할 수 있다.
+
+명령어 중, run을 기준으로 실행에 대한 옵션을 설명한다. 백그라운드 모드로 실행하기 위해 -d 명령어를 사용한다.
 ```bash
-docker stop <CONTAINER_ID>
+docker run -d 
 ```
 
+한편, 포트를 포워딩하는 옵션으로 -p를 사용할 수 있다. -p 옵션은 호스트 머신의 포트와 컨테이너 내부의 포트를 연결한다. 예를 들어, 호스트의 8080 포트를 컨테이너 내부의 80포트와 연결하여 nginx를 호스트의 8080 포트에서 실행하기 위해 아래와 같은 명령어를 작성한다.
+```bash
+docker run -p 8080:80 nginx
+```
+
+
+#### 3-2-3. Stop a Container
+실행 중인 컨테이너를 종료하는 명령어 중, 유사한 명령어는 stop/kill 명령어이다. stop Docker 컨테이너를 중지하는 데 사용되는 대표적인 명령어이지만, kill의 경우, 컨테이너를 강제/무조건적으로 중지(Terminate)합니다. 컨테이너를 빠르게 중지해야 하는 경우 혹은 docker stop으로 중지되지 않는 경우 kill 명령어를 사용하지만, 강제 중단으로 인한 데이터 손실이 발생할 수 있기 때문에 명령어 사용에 유의 해야 한다.
+
+```bash
+docker stop <CONTAINER_ID>
+
+docker kill <CONTAINER_ID>
+```
+docker ps -q 명령어는 현재 실행 중인 Docker 컨테이너의 컨테이너 ID(또는 짧은 형태의 컨테이너 ID) 목록을 출력하는 명령어로, 이를 변수화($)하면, 실행 중인 모든 컨테이너를 아래와 같이 중지 할 수 있다.
 ```bash
 docker stop $(docker ps -q)
 
 docker kill $(docker ps -q)
 ```
+
+
 #### 3-2-4. Remove a Container
 
 컨테이너의 파일 시스템과 설정 정보가 모두 삭제
