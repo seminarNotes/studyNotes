@@ -350,3 +350,30 @@ docker run -it <CONTAINER_ID>
 ```
 
 
+## 4. Dockerfile and DockerImage  
+### 4-1. Dockerfile  
+Dokcerfile 은 코드의 형태로 인프라를 구성하는 방법을 텍스트 형식으로 정의해놓은 파일을 의미한다. 이러한 Dockerfile은 build를 사용하여 Dockerimage를 구성할 수 있다. Dockerfile에는 이미지를 지정하거나 원하는 SW 및 library를 설치하기 위한 명령들을 기술하고, 컨테이너 실행 시 수행할 명령을 기술한다.  가장 기본이 되는 Dockerfile은 다음과 같은 형식을 따른다.  
+``` dockerfile
+FROM <사용될 이미지 이름>
+COPY <container 포함 파일명 대상 경로>
+RUN <리눅스 명령어>
+...
+```
+예를 들면, 
+``` dockerfile
+FROM nginx:lastest
+RUN echo '<h1> test nginx web page </h1>' >> index.html
+RUN cp /index.html /usr/share/nginx/html
+```
+
+dockerfile을 build하는 명령어는 아래와 같다.
+``` bash
+$ docker build -t <생성할 이미지명>
+Dockerfile 위치
+docker build -t testserver
+```
+
+- tag의 경우, 별도 작성하지 않으면 last[default]으로 자동으로 입력된다.
+
+
+`
