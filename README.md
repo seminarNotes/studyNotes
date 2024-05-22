@@ -87,7 +87,9 @@ def matrix_gaussian_elimination(matrix_A, vector_b) :
 ## Gradient Descent  
 Gradient Descent 방법은 Gradient의 반대 방향으로 매개변수를 이동하는 방법으로 이동 크기는 Gradient의 크기에 비례한다.
 
-$$ x_{k+1} = x_{k} - \alpha J^{T}F$$
+```math
+x_{k+1} = x_{k} - \alpha J^{T}F
+```
 
 ``` python
 def algorithm_gradient_descent(function_F, variable_X, learning_rate = 0.01, tol = CONSTANT_TOLERANCE, max_iter = CONSTANT_ITERATION, epsilon = CONSTANT_EPSILON) :
