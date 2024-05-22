@@ -87,7 +87,7 @@ def matrix_gaussian_elimination(matrix_A, vector_b) :
 ## Gradient Descent  
 Gradient Descent 방법은 Gradient의 반대 방향으로 매개변수를 이동하는 방법으로 이동 크기는 Gradient의 크기에 비례한다.
 
-```math
+``` math
 x_{k+1} = x_{k} - \alpha J^{T}F
 ```
 
@@ -109,7 +109,9 @@ def algorithm_gradient_descent(function_F, variable_X, learning_rate = 0.01, tol
 
 ## Gaussian-Newton Method
 
-$$x_{k+1} = x_{k} - (J^{T}J)^{-1}J^{T}F$$
+``` math
+x_{k+1} = x_{k} - (J^{T}J)^{-1}J^{T}F
+```
 
 Gaussian-Newton는 이동할 Step 사이즈를 (Gradient/Curvature)로 결정하는데, 이는 Gradient의 변화가 급격하면 (Curvature가 크면), 조금만 이동하고, Gradient의 변화가 적으면(Curvature가 작으면) 조금 더 크게 이동하하면서 해결하는 방식이다. Gaussian-Netwon이 Gradient Descent보다 더 정확하고 빠르게 해를 찾을 수 있다. 그러나, $J^{T}J$가 singular에 가까울 수록 수치적으로 불안정하여 해가 발산할 수 있따는 문제점이 존재했다.
 ```python
@@ -132,7 +134,10 @@ def algorithm_gaussian_newton(function_F, varible_X, tol = CONSTANT_TOLERANCE, m
 ## Levenberg Method
 
 Levenberg Method는 두 방법을 혼합한 것이고, 아래의 식으로 작성한다.
-$$x_{k+1} = x_{k} - (J^{T}J + \mu * I)^{-1}J^{T}F$$
+
+``` math
+x_{k+1} = x_{k} - (J^{T}J + \mu * I)^{-1}J^{T}F
+```
 
 Gaussian-Newton 방식에 Gradient Descent 방식을 혼합해서 수치적으로 불안정한 해의 발산에 대한 위험을 관리한다. $\mu$는 damping factor인데, 이 값이 낮으면 Gaussian-Netwon과 유사하고, 반대의 경우, Gradient Descent와 유사하다. 이 때, Gradient Descent와 유사할 경우, 수렴 속도가 느리다는 문제가 여전히 존재한다.
 
@@ -163,7 +168,9 @@ def algorithm_levenberg(function_F, variable_X, tol = CONSTANT_TOLERANCE, max_it
 ## Levenberg-Marquadt Method
 Levenberg-Marqaudt는 Levenberg Method가 Gradient Descent 방식으로 동작할 때, 수렴 속도가 느리다는 단점을 보완하며, 아래의 수식이 주어진다.
 
-$$x_{k+1} = x_{k} - (J^{T}J + \mu * diag(J^{T}J))^{-1}J^{T}F$$
+``` math
+x_{k+1} = x_{k} - (J^{T}J + \mu * diag(J^{T}J))^{-1}J^{T}F
+```
 
 항등 행렬(I) 대신 $diag(J^{T}J)$를 곱하는데, $J^{T}J$가 Hessian의 근사 행렬이기 때문에 $J^{T}J$의 대각 원소들은 각 매개 변수 축으로의 곡률을 의미한다.
 
