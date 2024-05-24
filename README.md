@@ -13,6 +13,59 @@ $$
 
 위 수식을 행렬 곱으로 표현하면,
 
+$$
+E(\bold{p}) = \sum_{1 \leq \i \leq n} e_{i}^{2} = e^{T}e = ||e||^2
+$$
+
+한편, 모델은 $m$개의 파라미터에 의해 결정 되고, $\bold{x}$를 입력값으로 하는 함수이기 때문에 아래와 같이 쓸 수 있다.
+
+$$
+\F(\bold{x}, \bold{p}) = \sum_{1 \leq i \leq n} a_{j}(\bold{x})p_{j} = 
+\left[
+\begin{matrix}
+a_{1}(\bold{x}), a_{2}(\bold{x}), \cdots, a_{m}(\bold{x})
+\end{matrix}
+\right]
+
+\left[
+\begin{matrix}
+p_{1} \\ p_{2} \\\vdots \\ p_{m}
+\end{matrix}
+\right]
+
+= \left[
+\begin{matrix}
+a_{1}(x_{1}), a_{2}(x_{1}), \cdots, a_m(x_{1}) \\
+a_{1}(x_{2}), a_{2}(x_{2}), \cdots, a_m(x_{2}) \\
+\vdots \\
+a_{1}(x_{n}), a_{2}(x_{n}), \cdots, a_m(x_{n}) \\
+\end{matrix}
+\right]
+
+\left[
+\begin{matrix}
+p_{1} \\ p_{2} \\ \vdots \\ p_{m}
+\end{matrix}
+\right]
+
+= A \bold{p}
+$$
+
+이제 최소값을 계산하기 위해, $\frac{\partial E(\bold{p})}{\partial \bold{p}} = 0$인 $\bold{p}$를 계산한다.
+
+$$
+\frac{\partial E(\bold{p})}{\partial \bold{p}} = \frac{\partial}{\partial \bold{p}} ||\bold{y} - A \bold{p}||^{2} = -2(\bold{y} - A \bold{p})^{T} = 0
+$$
+
+위 방정식으로부터 아래와 같은 닫힌 형식의 해를 계산할 수 있다.
+
+$$
+\bold{p} = (A^{T}A)^{-1}A^{T}\bold{y}
+$$
+
+요약하면, 선형 회귀 분석과 같은 선형 최소자승문제가 주어졌을 경우, 우리는 계수 행렬을 적절히 표현하여, 데이터 분포를 가장 잘 설명하는 모델의 파라미터를 위와 같이 계산할 수 있다.
+
+
 라이브러리 설치 및 변수 선언
 ```python
 import numpy as np
