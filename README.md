@@ -1,5 +1,17 @@
 # 수치해석학 내용 정리
+과학 뿐만 아니라 사회, 공학 등에서의 이론에서는 모델을 통해, 관측값과 현상을 설명한다. 이러한 모델은 관측값의 이해와 예측값의 개선을 설명하는 데에도 효과적이며,관련된 문제를 해결하고, 기술을 개발하는데 필수적이다. 모델은 이미 관측된 값을 잘 설명할 수 있어야하기 때문에, 관측값과 모델값의 차이가 최소화가 되는 모델을 결정 해야 한다.  
 
+최소자승문제(Least Sqaured Method)는 위와 같은 문제를 해결하기 위한 방법이며, 모델 파라미터에 대한 선형 또는 비선형에 따라 접근 방법이 달라진다. 선형 최소자승문제의 경우, pseudo invervse나 SVD(Singular Value Decomposition)를 이용해 해를 구할 수 있지만, 비선형 문제의 경우, Close-from Solution이 없기 때문에 반복을 통해 해를 찾는 방법을 사용한다. 이 때, 반복을 통해 해를 찾는 방법을 Iterative Maximization이라 하며, 대표적인 방법으로, Gradient Descent, Gaussian-Netwon 방법, Levenberg-Marquadt 방법 등이 있다.
+
+---
+
+## 선형 최소자승문제(Linear Least Sqaured Method)
+$n$개의 관측치가 주어져 있고, 관측값을 설명하는 모델의 파라미터의 수가 $m$라 가정하자. 그러면, 고정된 $i$번 째 관측치 $y_{i}$와 모델값 $F(x_{i}, \bold{p})$의 차이를 $e_{i}$의 제곱합이 최소가 되도록 순서쌍 $\bold{p}$을 결정하는 문제이다. 따라서, 아래와 같이 기술 할 수 있다.
+$$
+\bold{p}^{*} = \text{arg min} \sum_{1 \leq i \leq n} e_{i}^{2} = \text{arg min} \sum_{1 \leq i \leq n} (y_i - F(x_{i}, \bold{p}))^{2}
+$$
+
+위 수식을 행렬 곱으로 표현하면,
 
 라이브러리 설치 및 변수 선언
 ```python
