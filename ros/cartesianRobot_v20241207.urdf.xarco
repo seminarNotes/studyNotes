@@ -1,0 +1,513 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="custom_cartesian_robot">
+
+  <!-- Gazebo 설정 -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
+  </gazebo>
+
+  <!-- 부모 링크 (고정된 기준점) -->
+  <link name="world">
+    <visual>
+      <geometry>
+        <sphere radius="0.01"/>  <!-- 중심점 표시 -->
+      </geometry>
+      <material name="grey">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- 밑면 - 진한 회색 사각형 -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="2.0 2.0 0.05"/> <!-- 밑면 크기 -->
+      </geometry>
+      <material name="dark_grey">
+        <color rgba="0.3 0.3 0.3 1"/>  <!-- 진한 회색 -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="2.0 2.0 0.05"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <!-- 더 진한 회색 판 -->
+  <link name="top_plate">
+    <visual>
+      <geometry>
+        <box size="1.5 1.5 0.05"/> <!-- 상단판 크기 -->
+      </geometry>
+      <material name="darker_grey">
+        <color rgba="0.2 0.2 0.2 1"/>  <!-- 더 진한 회색 -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1.5 1.5 0.05"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- 고정 조인트 -->
+  <joint name="fixed_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="top_plate"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/> <!-- 상단 판의 위치: 밑면 위에 바로 놓임 -->
+  </joint>
+
+
+
+  <joint name="base_to_world" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Column1 -->
+  <link name="Column_1">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 1.0"/>
+      </geometry>
+      <material name="light_grey">
+        <color rgba="0.8 0.8 0.8 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.1 0.1 1.0"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_Column_1" type="fixed">
+    <parent link="base_link"/>
+    <child link="Column_1"/>
+    <origin xyz="1 1 0.5" rpy="0 0 0"/>
+  </joint>
+
+ <!-- Column2 -->
+  <link name="Column_2">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 1.0"/>
+      </geometry>
+      <material name="light_grey">
+        <color rgba="0.8 0.8 0.8 1"/>  <!-- 연한 회색 -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.1 0.1 1.0"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_Column_2" type="fixed">
+    <parent link="base_link"/>
+    <child link="Column_2"/>
+    <origin xyz="-1 1 0.5" rpy="0 0 0"/> <!-- Column2 -->
+  </joint>
+
+  <!-- Column3 -->
+  <link name="Column_3">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 1.0"/> <!-- 기둥 크기 -->
+      </geometry>
+      <material name="light_grey">
+        <color rgba="0.8 0.8 0.8 1"/>  <!-- 연한 회색 -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.1 0.1 1.0"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_Column_3" type="fixed">
+    <parent link="base_link"/>
+    <child link="Column_3"/>
+    <origin xyz="-1 -1 0.5" rpy="0 0 0"/> <!-- Column3 -->
+  </joint>
+
+  <!-- Column4 -->
+  <link name="Column_4">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 1.0"/>
+      </geometry>
+      <material name="light_grey">
+        <color rgba="0.8 0.8 0.8 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.1 0.1 1.0"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_Column_4" type="fixed">
+    <parent link="base_link"/>
+    <child link="Column_4"/>
+    <origin xyz="1 -1 0.5" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Column1과 Column4를 연결하는 레일 -->
+  <link name="rail_col1_col4">
+    <visual>
+      <geometry>
+        <cylinder radius="0.03" length="2.0"/>
+      </geometry>
+      <material name="dark_grey">
+        <color rgba="0.3 0.3 0.3 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.03" length="2.0"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_rail_col1_col4" type="fixed">
+    <parent link="Column_1"/>
+    <child link="rail_col1_col4"/>
+    <origin xyz="0 -1 0.5" rpy="1.5708 0 0"/>
+  </joint>
+
+  <!-- Column2과 Column3를 연결하는 레일 -->
+  <link name="rail_col2_col3">
+    <visual>
+      <geometry>
+        <cylinder radius="0.03" length="2.0"/> <!-- 레일 크기 -->
+      </geometry>
+      <material name="dark_grey">
+        <color rgba="0.3 0.3 0.3 1"/> <!-- 진한 회색 -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.03" length="2.0"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_rail_col2_col3" type="fixed">
+    <parent link="Column_2"/>
+    <child link="rail_col2_col3"/>
+    <origin xyz="0 -1 0.5" rpy="1.5708 0 0"/> <!-- X축을 따라 배치 -->
+  </joint>
+
+  <!-- Y축 컨트롤러 -->
+  <link name="y_axis_controller1">
+    <visual>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/> <!-- 밑면이 기준점이 되도록 이동 -->
+      <geometry>
+        <box size="0.15 0.15 0.4"/> <!-- 박스 크기 -->
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 0.5 1"/> <!-- 어두운 파랑 -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.15 0.15 0.4"/> <!-- 충돌 모델 -->
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.5"/> <!-- 질량 설정 -->
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </inertial>
+  </link>
+  <joint name="joint_y_axis_MOVE_controller" type="prismatic">
+    <parent link="rail_col1_col4"/>
+    <child link="y_axis_controller1"/>
+    <origin xyz="0 0 -1" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/> <!-- Y축 방향으로 움직임 -->
+    <limit lower="0.0" upper="1.75" effort="10.0" velocity="1.0"/>
+  </joint>
+
+
+    <!-- Y축 컨트롤러 -->
+  <link name="y_axis_controller2">
+    <visual>
+      <origin xyz="-0.1 0 0" rpy="0 0 0"/> <!-- 밑면이 기준점이 되도록 이동 -->
+      <geometry>
+        <box size="0.4 0.15 0.15"/> <!-- 박스 크기 -->
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 0.5 1"/> <!-- 어두운 파랑 -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.4 0.15 0.15"/> <!-- 충돌 모델 -->
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.5"/> <!-- 질량 설정 -->
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </inertial>
+  </link>
+  <joint name="juction_y_axis_controller2" type="fixed">
+    <parent link="x_axis_rail1"/>
+    <child link="y_axis_controller2"/>
+    <origin xyz="0 0 -1" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- X축 레일 -->
+  <link name="x_axis_rail1">
+    <visual>
+      <geometry>
+        <cylinder radius="0.03" length="2.0"/>
+      </geometry>
+      <material name="dark_grey">
+        <color rgba="0.2 0.2 0.2 1"/> <!-- 짙은 회색 -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.03" length="2.0"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_x_MOVE_axis_rail" type="fixed">
+    <parent link="y_axis_controller1"/>
+    <child link="x_axis_rail1"/>
+    <origin xyz="-1 0 0" rpy="0 1.5708 0"/>
+  </joint>
+
+   <!-- X축 레일 -->
+  <link name="x_axis_rail2">
+    <visual>
+      <geometry>
+        <cylinder radius="0.03" length="2.0"/>
+      </geometry>
+      <material name="dark_grey">
+        <color rgba="0.2 0.2 0.2 1"/> <!-- 짙은 회색 -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.03" length="2.0"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_x_MOVE_axis_rail" type="fixed">
+    <parent link="y_axis_controller1"/>
+    <child link="x_axis_rail2"/>
+    <origin xyz="-1 0 0.2" rpy="0 1.5708 0"/>
+  </joint>
+
+  <!-- X축 컨트롤러 -->
+  <link name="x_axis_controller">
+    <visual>
+      <origin xyz="-0.1 0. 0" rpy="0 0 0"/> <!-- 밑면이 기준점이 되도록 이동 -->
+      <geometry>
+        <box size="0.4 0.35 0.4"/> <!-- 박스 크기 -->
+      </geometry>
+      <material name="dark_green">
+        <color rgba="0.0 0.0 0.5 1"/>  <!-- 남색 -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.2 0.2 0.2"/> <!-- 충돌 모델 -->
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.5"/> <!-- 질량 -->
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </inertial>
+  </link>
+  <joint name="joint_x_axis_MOVE_controller" type="prismatic">
+    <parent link="x_axis_rail1"/>
+    <child link="x_axis_controller"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/> <!-- Z축 방향 이동 (레일을 따라 움직임) -->
+    <limit lower="-0.7" upper="0.7" effort="10.0" velocity="1.0"/>
+  </joint>
+
+
+<!-- Column1과 Column4를 연결하는 레일 -->
+  <link name="cap2">
+    <visual>
+      <origin xyz="-0.1 0 0.65" rpy="0 0 0"/> <!-- 밑면이 기준점이 되도록 이동 -->
+      <geometry>
+        <cylinder radius="0.15" length="0.4"/>
+      </geometry>
+      <material name="dark_grey">
+        <color rgba="0.1 0.1 0.1 1"/> <!-- 검정색 -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.15" length="0.4"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="fix_cap2" type="fixed">
+    <parent link="x_axis_controller"/>
+    <child link="cap2"/>
+    <origin xyz="0 1 0" rpy="1.5708 0 0"/>
+  </joint>
+
+<!-- Column1과 Column4를 연결하는 레일 -->
+  <link name="cap1">
+    <visual>
+      <origin xyz="0 0.3 0" rpy="0 0 0"/> <!-- 밑면이 기준점이 되도록 이동 -->
+      <geometry>
+        <cylinder radius="0.07" length="0.15"/>
+      </geometry>
+      <material name="dark_grey">
+        <color rgba="0 0 0 1"/> <!-- 검정색 -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.07" length="0.15"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="fix_cap1" type="fixed">
+    <parent link="cap2"/>
+    <child link="cap1"/>
+    <origin xyz="-0.1 -0.3 0.4" rpy="0 0 0"/>
+  </joint>
+
+
+
+
+
+  <!-- X축 컨트롤러 아래에 고정된 레일 -->
+<link name="z_axis_rail">
+  <visual>
+    <geometry>
+      <cylinder radius="0.02" length="0.8"/> <!-- 실린더 역할 -->
+    </geometry>
+    <material name="dark_grey">
+      <color rgba="0.2 0.2 0.2 1"/> <!-- 짙은 회색 -->
+    </material>
+  </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.03" length="0.8"/> <!-- 충돌 모델 -->
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.3"/> <!-- 질량 -->
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </inertial>
+</link>
+<joint name="joint_z_axis_MOVE_controller" type="prismatic">
+  <parent link="x_axis_controller"/> <!-- 남색 박스와 연결 -->
+  <child link="z_axis_rail"/> <!-- 새 레일 -->
+  <origin xyz="-0.1 0.25 0" rpy="1.5708 0 0"/><!-- 초록색 박스 아래에 배치 -->
+  <axis xyz="0 0 1"/> <!-- Z축 방향 이동 (레일을 따라 움직임) -->
+    <limit lower="0" upper="0.5" effort="10.0" velocity="1.0"/>
+</joint>
+
+<!-- Z축 레일 아래에 위치한 원통 -->
+<link name="z_axis_revoluate">
+  <visual>
+    <geometry>
+      <sphere radius="0.05"/>  <!-- 원통 역할 -->
+    </geometry>
+    <material name="light_grey">
+      <color rgba="0.0 0.0 0.0 1"/> <!-- 주황색 -->
+    </material>
+  </visual>
+  <collision>
+    <geometry>
+      <cylinder radius="0.05" length="0.3"/> <!-- 충돌 모델 -->
+    </geometry>
+  </collision>
+  <inertial>
+    <mass value="0.2"/> <!-- 질량 -->
+    <inertia ixx="0.0002" ixy="0" ixz="0" iyy="0.0002" iyz="0" izz="0.0001"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/> <!-- 관성 중심 -->
+  </inertial>
+</link>
+
+<!-- Z축 레일과 원통을 연결하는 회전 조인트 -->
+<joint name="joint_z_axis_ROLL_controller" type="revolute">
+  <parent link="z_axis_rail"/> <!-- Z축 레일 -->
+  <child link="z_axis_revoluate"/> <!-- 원통 -->
+  <origin xyz="0 0 0.4" rpy="0 0 0"/> <!-- Z축 레일 아래에 위치 -->
+  <axis xyz="0 0 1"/> <!-- X축 기준 회전 (Z_AXIS_RAIL과 평행) -->
+  <limit lower="-3.14159" upper="3.14159" effort="5.0" velocity="1.0"/> <!-- 360도 회전 가능 -->
+  <dynamics damping="0.1" friction="0.1"/>
+</joint>
+
+<!-- 노란색 엔드 이펙터 -->
+<link name="end_effector_cylinder">
+  <visual>
+    <origin xyz="0 0 0.1" rpy="0 0 0"/> <!-- 밑면이 기준점이 되도록 이동 -->
+    <geometry>
+      <cylinder radius="0.03" length="0.15"/> <!-- 실린더 역할 -->
+    </geometry>
+    <material name="yellow">
+      <color rgba="1.0 1.0 0.0 1"/> <!-- 노란색 -->
+    </material>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0.15" rpy="0 0 0"/> <!-- 밑면이 기준점이 되도록 이동 -->
+    <geometry>
+      <cylinder radius="0.02" length="0.3"/> <!-- 실린더 역할 -->
+    </geometry>
+  </collision>
+  <inertial>
+    <mass value="0.1"/> <!-- 질량 -->
+    <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    <origin xyz="0 0 0.15" rpy="0 0 0"/> <!-- 질량 중심도 이동 -->
+  </inertial>
+</link>
+
+<!-- 엔드 이펙터 각도 조절용 조인트 -->
+<joint name="joint_z_axis_PITCH_controller" type="revolute">
+  <parent link="z_axis_revoluate"/> <!-- Z축 레일 -->
+  <child link="end_effector_cylinder"/> <!-- 노란색 엔드 이펙터 -->
+  <origin xyz="0 0 0" rpy="0 0 0"/> <!-- 엔드 이펙터 밑면 기준으로 배치 -->
+  <axis xyz="1 0 0"/> <!-- X축 기준으로 회전 -->
+  <limit lower="-1.5708" upper="1.5708" effort="10.0" velocity="1.0"/> <!-- -90도 ~ 90도 제한 -->
+  <dynamics damping="0.1" friction="0.1"/>
+</joint>
+
+<!-- 빨간색 엔드 이펙터 -->
+<link name="red_end_effector">
+  <visual>
+    <origin xyz="0 0 0.1" rpy="0 0 0"/> <!-- 빨간색 실린더의 중심 위치 -->
+    <geometry>
+      <cylinder radius="0.005" length="0.05"/> <!-- 빨간색 실린더 -->
+    </geometry>
+    <material name="red">
+      <color rgba="1.0 0.0 0.0 1"/> <!-- 빨간색 -->
+    </material>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0.1" rpy="0 0 0"/> <!-- 충돌 모델 중심 -->
+    <geometry>
+      <cylinder radius="0.005" length="0.05"/> <!-- 빨간색 실린더 -->
+    </geometry>
+  </collision>
+  <inertial>
+    <mass value="0.05"/> <!-- 질량 -->
+    <inertia ixx="0.00005" ixy="0" ixz="0" iyy="0.00005" iyz="0" izz="0.00005"/>
+    <origin xyz="0 0 0.075" rpy="0 0 0"/> <!-- 관성 중심 -->
+  </inertial>
+</link>
+
+<!-- 노란색 실린더와 빨간색 실린더를 고정 조인트로 연결 -->
+<joint name="joint_yellow_to_red" type="fixed">
+  <parent link="end_effector_cylinder"/> <!-- 노란색 엔드 이펙터 -->
+  <child link="red_end_effector"/> <!-- 빨간색 엔드 이펙터 -->
+  <origin xyz="0 0 0.1" rpy="0 0 0"/> <!-- 빨간색 실린더를 노란색 실린더 끝에 연결 -->
+</joint>
+
+</robot>
