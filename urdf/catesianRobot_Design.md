@@ -50,6 +50,7 @@ root Link: world has 1 child(ren)
 
 
 ### A. 메모
+```bash
 
 ~/catkin_ws/src/make-package/
 ├── launch/
@@ -61,6 +62,7 @@ root Link: world has 1 child(ren)
 ├── CMakeLists.txt                       # ROS 빌드 시스템 설정 파일
 ├── package.xml    
 
+```
 
 |파일|내용|
 |--|--|
