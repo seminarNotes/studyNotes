@@ -1,5 +1,8 @@
-moveit은 지원되는 라이브러리로, 충돌 회피 및 경로 계획을 쉽게 구현할 수 있도록 ROS에서 지원되는 라이브러리이다. 특히, moveit assistance를 이용하면, urdf 파일을 이용하여, 손쉽게 패키지를 작성할 수 있고, 작성한 패키지를 launch 시켜 OPML을 이용하면, 경로 계획을 할 수 있다. 먼저, urdf 파일이 준비되었단 가정 하에 ROS 명령어를 사용하여 urdf 파일을 체크해볼 수 있다.
+Ubuntu20.04LTS / ROS-noetic
 
+moveit은 지원되는 라이브러리로, 충돌 회피 및 경로 계획을 쉽게 구현할 수 있도록 ROS에서 지원되는 라이브러리이다. 특히, moveit assistance를 이용하면, urdf 파일을 이용하여, 손쉽게 패키지를 작성할 수 있고, 작성한 패키지를 launch 시켜 OPML을 이용하면, 경로 계획을 할 수 있다. 먼저, urdf 파일이 준비되었단 가정 하에 ROS 명령어를 사용하여 urdf 파일을 체크해볼 수 있다. 아래 자료는 Youtube 영상 https://www.youtube.com/watch?v=csaStjYVYtk&ab_channel=KIMeLab을 참고하였다.
+
+1. Write and Check URDF files
 
 ```bash
 $ ~/catkin_ws/src/testbot_description/urdf$ check_urdf testbot.urdf
@@ -18,5 +21,34 @@ Created file testbot.gv
 Created file testbot.pdf
 ```
 
+2. Moveit Setup
+아래에서는 기본적으로 ROS, Moveit이 설치 되어 있다는 가정 하에 작업을 수행하는 것이다. 만약 moveit이 설치되어 있지 않다면 아래 코드를 이용하여 moveit 설치한다.
+
+Moveit 패키지 설치
+``` bash
+$ sudo apt update
+$ sudo apt install ros-noetic-moveit*
+```
+
+Moveit 설치하고 나서 catkin build를 한번 수행하고, 패키지가 성장적으로 설치 되었는지 확인한다.
+``` bash
+$ cd ~/catkin_ws & catkin_make
+$ source devel/setup.bash
+```
+
+빌드가 완료 되었다면, 이제 패키지가 인식되기 때문에 rospack을 이용해서 조회한다.
+``` bash
+rospack find moveit_setup_assistance
+```
+
+위 코드를 이상 없이 실행되고, 패키지가 정상적으로 인식된다면, setup assistance를 실행한다. 이 프로그램도 launch 파일로 구성되어 있기 때문에 roslaunch 명령어를 사용해서 실행하면, GUI 실행된다.
+
+``` bash
+$ roslaunch moveit_setup_assistant setup_assistant.launch
+
+```
+
+
+   
 
 
