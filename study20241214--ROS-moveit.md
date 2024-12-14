@@ -45,8 +45,18 @@ rospack find moveit_setup_assistance
 
 ``` bash
 $ roslaunch moveit_setup_assistant setup_assistant.launch
-
 ```
+
+GUI가 화면에 나타나면, Start에서 URDF 파일을 업로드한다.
+
+Self-Collisions에서는 충돌을 감지하는 matrix를 생성하는 단계이다.
+
+Plannig Group에서는 경로 계획을 할때의 사용되는 group을 설정한다. 매니퓰레이터 로봇의 경우, 대게 robot의 arm과 end-effector를 기준으로 group을 설정한다.
+
+Robot Pose는 
+
+
+
 
 
    
