@@ -1,0 +1,538 @@
+<?xml version="1.0"?>
+<robot name="recRobot">
+  
+  <!-- Base link (지지대 역할)
+  (가로) X (세로) X (높이) = 1.2 X 1.2 X 0.1 m
+  무게 = 36 kg
+  -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0.05" rpy="0 0 0" />
+      <mass value="36.0" />
+      <inertia ixx="3.67" ixy="0" ixz="0" iyy="3.67" iyz="0" izz="8.64" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.05" rpy="0 0 0" />
+      <geometry>
+        <box size="1.2 1.2 0.1" />
+      </geometry>
+      <material name="gray">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.05" rpy="0 0 0" />
+      <geometry>
+        <box size="1.2 1.2 0.1" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Task link (작업 부품)
+  (가로) X (세로) X (높이) = 1.0 X 1.0 X 0.1 m
+  무게 = 25 kg
+  -->
+  <link name="task_link">
+    <inertial>
+      <origin xyz="0 0 0.05" rpy="0 0 0" />
+      <mass value="25.0" />
+      <inertia ixx="2.09" ixy="0" ixz="0" iyy="2.09" iyz="0" izz="4.17" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.05" rpy="0 0 0" />
+      <geometry>
+        <box size="1.0 1.0 0.1" />
+      </geometry>
+      <material name="blue">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.05" rpy="0 0 0" />
+      <geometry>
+        <box size="1.0 1.0 0.1" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Corner supports -->
+  <link name="corner1">
+    <inertial>
+      <origin xyz="-0.55 -0.55 0.35" rpy="0 0 0" />
+      <mass value="5.0" />
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.21" />
+    </inertial>
+    <visual>
+      <origin xyz="-0.55 -0.55 0.35" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.5" />
+      </geometry>
+      <material name="dark_gray">
+        <color rgba="0.3 0.3 0.3 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.55 -0.55 0.35" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.5" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="corner2">
+    <inertial>
+      <origin xyz="0.55 -0.55 0.35" rpy="0 0 0" />
+      <mass value="5.0" />
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.21" />
+    </inertial>
+    <visual>
+      <origin xyz="0.55 -0.55 0.35" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.5" />
+      </geometry>
+      <material name="dark_gray">
+        <color rgba="0.3 0.3 0.3 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.55 -0.55 0.35" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.5" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="corner3">
+    <inertial>
+      <origin xyz="-0.55 0.55 0.35" rpy="0 0 0" />
+      <mass value="5.0" />
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.21" />
+    </inertial>
+    <visual>
+      <origin xyz="-0.55 0.55 0.35" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.5" />
+      </geometry>
+      <material name="dark_gray">
+        <color rgba="0.3 0.3 0.3 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.55 0.55 0.35" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.5" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="corner4">
+    <inertial>
+      <origin xyz="0.55 0.55 0.35" rpy="0 0 0" />
+      <mass value="5.0" />
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.21" />
+    </inertial>
+    <visual>
+      <origin xyz="0.55 0.55 0.35" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.5" />
+      </geometry>
+      <material name="dark_gray">
+        <color rgba="0.3 0.3 0.3 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.55 0.55 0.35" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.5" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- 2 X Rail -->
+  <link name="Xrail_corner1_corner2">
+    <inertial>
+      <origin xyz="0 -0.55 0.625" rpy="0 0 0" />
+      <mass value="5.0" />
+      <inertia ixx="0.26" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.26" />
+    </inertial>
+    <visual>
+      <origin xyz="0 -0.55 0.625" rpy="0 0 0" />
+      <geometry>
+        <box size="1.2 0.1 0.05" />
+      </geometry>
+      <material name="dark_gray">
+        <color rgba="0.3 0.3 0.3 1.0" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin xyz="0 -0.55 0.625" rpy="0 0 0" />
+      <geometry>
+        <box size="1.2 0.1 0.05" />
+      </geometry>
+    </collision> -->
+  </link>
+
+  <link name="Xrail_corner3_corner4">
+    <inertial>
+      <origin xyz="0 0.55 0.625" rpy="0 0 0" />
+      <mass value="5.0" />
+      <inertia ixx="0.26" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.26" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0.55 0.625" rpy="0 0 0" />
+      <geometry>
+        <box size="1.2 0.1 0.05" />
+      </geometry>
+      <material name="dark_gray">
+        <color rgba="0.3 0.3 0.3 1.0" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin xyz="0 0.55 0.625" rpy="0 0 0" />
+      <geometry>
+        <box size="1.2 0.1 0.05" />
+      </geometry>
+    </collision> -->
+  </link>
+
+  <link name="Xcontroller">
+    <inertial>
+      <origin xyz="0 0 0.675" rpy="0 0 0" /> 
+      <mass value="5.0" />
+      <inertia ixx="0.26" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.26" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.675" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 1.2 0.05" />
+      </geometry>
+      <material name="dark_gray">
+        <color rgba="0.1 0.1 0.1 1.0" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin xyz="0 0 0.675" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 1.2 0.05" />
+      </geometry>
+    </collision> -->
+  </link>
+
+
+  <link name="Ycontroller">
+    <inertial>
+      <origin xyz="0 0 0.75" rpy="0 0 0" /> 
+      <mass value="5.0" />
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.75" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.1" />
+      </geometry>
+      <material name="dark_gray">
+        <color rgba="0.3 0.3 0.3 1.0" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin xyz="0 0 0.75" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.1" />
+      </geometry>
+    </collision> -->
+  </link>
+
+  <link name="Zcontroller">
+    <inertial>
+      <origin xyz="0.1 0 0.6" rpy="0 0 0" />
+      <mass value="5.0" />
+      <inertia ixx="0.02" ixy="0" ixz="0" iyy="0.5" iyz="0" izz="0.02" />
+    </inertial>
+    <visual>
+      <origin xyz="0.1 0 0.8" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.6" />
+      </geometry>
+      <material name="dark_gray">
+        <color rgba="0.3 0.3 0.3 1.0" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin xyz="0.1 0 0.8" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.6" />
+      </geometry>
+    </collision> -->
+  </link> 
+
+  <link name="Pcontroller">
+    <inertial>
+      <origin xyz="0 0 0.65" rpy="0 0 0" />
+      <mass value="5.0" />
+      <inertia ixx="0.02" ixy="0" ixz="0" iyy="0.5" iyz="0" izz="0.02" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <material name="dark_gray">
+        <color rgba="0.3 0.3 0.3 1.0" />
+      </material>
+    </visual>
+     <!-- <collision>
+      <origin xyz="0 0 0.8" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+    </collision> -->
+  </link> 
+
+  <link name="Rcontroller">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" /> 
+      <mass value="5.0" />
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.05" length="0.05"/>
+      </geometry>
+      <material name="dark_gray">
+        <color rgba="0.3 0.3 0.3 1.0" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" /> 
+      <geometry>
+        <cylinder radius="0.05" length="0.05"/>
+      </geometry>
+    </collision> -->
+  </link>
+
+  <link name="EndEffector">
+    <inertial>
+      <origin xyz="0 0 -0.1" rpy="0 0 0" />
+      <mass value="5.0" />
+      <inertia ixx="0.02" ixy="0" ixz="0" iyy="0.5" iyz="0" izz="0.02" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 -0.1" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.005" length="0.1"/>
+      </geometry>
+      <material name="dark_gray">
+        <color rgba="0.5 0.5 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.1" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.005" length="0.1"/>
+      </geometry>
+    </collision>
+  </link> 
+
+  <!-- Joints connecting base to corners -->
+  <joint name="base_to_corner1" type="fixed">
+    <parent link="base_link" />
+    <child link="corner1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="base_to_corner2" type="fixed">
+    <parent link="base_link" />
+    <child link="corner2" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="base_to_corner3" type="fixed">
+    <parent link="base_link" />
+    <child link="corner3" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="base_to_corner4" type="fixed">
+    <parent link="base_link" />
+    <child link="corner4" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint> 
+
+  <!-- Joint connecting base and task link -->
+  <joint name="base_to_task" type="fixed">
+    <parent link="base_link" />
+    <child link="task_link" />
+    <origin xyz="0 0 0.1" rpy="0 0 0" />
+  </joint>
+
+  <!-- Joint connecting corner and rail -->
+  <joint name="corner1_to_Xrail" type="fixed">
+    <parent link="corner1" />
+    <child link="Xrail_corner1_corner2" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="corner3_to_Xrail" type="fixed">
+    <parent link="corner3" />
+    <child link="Xrail_corner3_corner4" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+ <joint name="X_axis_controller" type="prismatic">
+   <parent link="Xrail_corner1_corner2"/> 
+   <child link="Xcontroller"/> 
+   <origin xyz="0 0 0" rpy="0 0 0"/>
+   <axis xyz="1 0 0"/> 
+   <limit lower="-0.5" upper="0.5" effort="5.0" velocity="1.0"/>
+  </joint>
+
+  <joint name="Y_axis_controller" type="prismatic">
+   <parent link="Xcontroller"/> 
+   <child link="Ycontroller"/> 
+   <origin xyz="0 0 0" rpy="0 0 0"/>
+   <axis xyz="0 1 0"/> 
+   <limit lower="-0.45" upper="0.45" effort="5.0" velocity="1.0"/>
+  </joint> 
+
+  <joint name="Z_axis_controller" type="prismatic">
+   <parent link="Ycontroller"/> 
+   <child link="Zcontroller"/> 
+   <origin xyz="0 0 0" rpy="0 0 0"/>
+   <axis xyz="0 0 1"/> 
+   <limit lower="-0.2" upper="0.2" effort="5.0" velocity="1.0"/>
+  </joint> 
+
+  <joint name="Roll_controller" type="continuous">
+    <parent link="Zcontroller"/>
+    <child link="Rcontroller"/>
+    <axis xyz="0 0 1"/> 
+    <origin xyz="0.1 0 0.475" rpy="0 0 0"/>
+    <limit lower="-3.1415" upper="3.1415" effort="10.0" velocity="1.0"/>
+  </joint> 
+
+  <joint name="Pitch_controller" type="continuous">
+    <parent link="Rcontroller"/>
+    <child link="Pcontroller"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/> 
+    <limit lower="-1.5708" upper="1.5708" effort="10.0" velocity="1.0"/>
+  </joint>
+
+  <joint name="Controller_to_EndEffector" type="fixed">
+   <parent link="Pcontroller" />
+    <child link="EndEffector" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+
+
+
+
+
+  <!--################################################## -->
+  <!--################################################## -->
+  <!--################################################## -->
+  <!--################################################## -->
+  <!--################################################## -->
+  <!--아래는 PCB Board에 대한 정보입니다##################### -->
+  <!--################################################## -->
+  <!--################################################## -->
+  <!--################################################## -->
+  <!--################################################## -->
+  <!--################################################## -->
+  
+    <!--30cm x 30cm x 1cm, 1kg 보통 PCB의 10배라 생각-->
+
+    <link name="PCB_board">
+        <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <mass value="1.0" />
+        <inertia ixx="0.007508" ixy="0" ixz="0" iyy="0.007508" iyz="0" izz="0.015" />
+        </inertial>
+        <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+            <box size="0.3 0.3 0.01" />
+        </geometry>
+        <material name="green">
+            <!-- <color rgba="0.2 0.5 0.2 1"/> -->
+            <color rgba="0.0 0.1 0.0 1.0"/>
+        </material>
+        </visual>
+        <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+            <box size="0.3 0.3 0.01" />
+        </geometry>
+        </collision>
+    </link>
+
+    <!-- Component 추가 -->
+    <link name="square_side70mm_length200mm">
+        <inertial>
+        <origin xyz="0 0 0.005" rpy="0 0 0" />
+        <mass value="0.1" />
+        <inertia ixx="0.00000833" ixy="0" ixz="0" iyy="0.00000833" iyz="0" izz="0.000015" />
+        </inertial>
+        <visual>
+        <origin xyz="-0.075 -0.075 0.01" rpy="0 0 0" />
+        <geometry>
+            <box size="0.07 0.07 0.02" />
+        </geometry>
+        <material name="black">
+            <color rgba="0.0 0.0 0.0 1.0"/>
+        </material>
+        </visual>
+        <collision>
+        <origin xyz="-0.075 -0.075 0.02" rpy="0 0 0" />
+        <geometry>
+            <box size="0.07 0.07 0.01" />
+        </geometry>
+        </collision>
+    </link>
+
+    <link name="circle_radius35mm_length200mm">
+        <inertial>
+        <origin xyz="0 0 0.005" rpy="0 0 0" />
+        <mass value="0.1" />
+        <inertia ixx="0.00000833" ixy="0" ixz="0" iyy="0.00000833" iyz="0" izz="0.000015" />
+        </inertial>
+        <visual>
+        <origin xyz="0.075 0.075 0.005" rpy="0 0 0" />
+        <geometry>
+            <cylinder radius="0.035" length="0.02" />
+        </geometry>
+        <material name="black">
+            <color rgba="0.0 0.0 0.0 1.0"/>
+        </material>
+        </visual>
+        <collision>
+        <origin xyz="0.075 0.075 0.005" rpy="0 0 0" />
+        <geometry>
+            <cylinder radius="0.035" length="0.02" />
+        </geometry>
+        </collision>
+    </link>
+
+    <joint name="square_side70mm_length200mm_on_the_PCB" type="fixed">
+        <parent link="PCB_board"/>
+        <child link="square_side70mm_length200mm"/>
+        <origin xyz="0 0 0.005" rpy="0 0 0"/>
+        <!-- <origin xyz="0 0 0" rpy="0 0 0"/> -->
+    </joint>
+
+    <joint name="circle_radius35mm_length200mm_on_the_PCB" type="fixed">
+        <parent link="PCB_board"/>
+        <child link="circle_radius35mm_length200mm"/>
+        <origin xyz="0 0 0.005" rpy="0 0 0"/>
+        <!-- <origin xyz="0 0 0" rpy="0 0 0"/> -->
+    </joint>
+
+    <joint name="PCB_board_on_the_robot" type="fixed">
+      <parent link="task_link"/>
+      <child link="PCB_board"/>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    </joint>
+
+</robot>
