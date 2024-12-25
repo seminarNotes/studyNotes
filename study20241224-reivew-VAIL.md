@@ -10,7 +10,7 @@
 # 2. Related Work
 # 3. Preliminaries
 
-## 기존 문제  
+## Standard Framework
 데이터 셋 ${x_{i}, y_{i}}$가 주어졌다고 하자. label $y_{i}$를 feature $x_{i}에 대해 standard maximum likelihood estimation $q(y_{i}|x_{i})$은 아래와 같은 최적화 문제에 의해 결정된다.
 
 $$ \min_{q} E_{x,y \sim p(x,y)}[- \log q(y|x)]$$
@@ -76,6 +76,13 @@ $$ \text{subject to } E_{x \sim p(x)} [KL[E(z|x) \Vert r(z)]] \leq I_{c}$$
 $$
 \min_{q, E} E_{x, y \sim p(x, y}[ E_{z \sim E(z|x)}[- \log q(y|z)] ] + \beta (E_{x \sim p(x)} [KL[E(z|x) \Vert r(z)]] - I_{c})
 $$
+
+# 4. Variational Discriminator Bottle
+
+이 section에서는 기존 GAN 구조에 Variational Information Bottleneck(VIB)을 적용해서 Variational Discriminator Bottleneck(VDB)라는 새로운 방법을 제시한다. 해당 방법은 GAN의 Discriminator를 개선하는 데 중점을 두고 있다.
+
+....
+
 
 
 # A. Prior Knowledge 
