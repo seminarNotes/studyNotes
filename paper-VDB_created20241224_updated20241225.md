@@ -17,7 +17,7 @@
 # 3. Preliminaries
 
 ## Standard Framework
-데이터 셋 ${x_{i}, y_{i}}$가 주어졌다고 하자. label $y_{i}$를 feature $x_{i}에 대해 standard maximum likelihood estimation $q(y_{i}|x_{i})$은 아래와 같은 최적화 문제에 의해 결정된다.
+데이터 셋 ${x_{i}, y_{i}}$가 주어졌다고 하자. label $y_{i}$를 feature $x_{i}$에 대해 standard maximum likelihood estimation $q(y_{i}|x_{i})$은 아래와 같은 최적화 문제에 의해 결정된다.
 
 $$ \min_{q} E_{x,y \sim p(x,y)}[- \log q(y|x)]$$
 
