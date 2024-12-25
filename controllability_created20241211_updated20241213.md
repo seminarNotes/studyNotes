@@ -1,6 +1,3 @@
-# 제어 공학
-
-
 제어 공학에서 선형 시불변 시스템(Linear Time-Invariant)는 아래와 같이 기술된다.
 
 $$\dot{x}(t) = Ax(t) + Bu(t)$$
