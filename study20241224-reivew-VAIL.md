@@ -10,6 +10,21 @@
 # 2. Related Work
 # 3. Preliminaries
 
+## 기존 문제  
+데이터 셋 ${x_{i}, y_{i}}$가 주어졌다고 하자. label $y_{i}$를 feature $x_{i}에 대해 standard maximum likelihood estimation $q(y_{i}|x_{i})$은 아래와 같은 최적화 문제에 의해 결정된다.
+
+$$ \min_{q} E_{x,y \sim p(x,y)}[- \log q(y|x)]$$
+
+하지만, 이 접근 방식은 과적합(overfitting)과 데이터의 잡음에 민감하다는 한계점이 존재한다.
+
+## Information Bottleneck
+Alemi et al. (2016)은 Information Bottleneck을 사용해서 위 문제를 해결하려고 했다. 이 방법은 먼저 입력값 $x$과 잠재변수 $z$ 사이의 상호 정보 $I(X,Z)$를 제어하는 encoder $E(z|x)$를 소개하는 것으로 시작된다. 이 방법은 $x$에서 중요 정보만 $z$로 전달하도록 제어하는 것으로 상호 정보의 상한 $I_{c}$에 대해 $I(X,Z) \leq I_{c}$를 만족시켜, 잠재변수 $z$가 $x$의 모든 정보를 복사하지 못하도록 제약한다.
+
+아래와 같은 목적 함수를 정의한다.
+
+$$ J(q, E) = \min_{q, E} E_{x, y \sim p(x, y}[ E_{z \sim E(z|x)}[- \log q(y|z)] ] $$
+$$ \text{subject to } I(X,Z) \leq I_{c}$$
+
 
 
 # A. Prior Knowledge
