@@ -1,3 +1,19 @@
+
+# Abstract
+
+**Adversarial learning methods have been proposed for a wide range of applications, but the training of adversarial models can be notoriously unstable.** Effectively balancing the performance of the generator and discriminator is critical, since a discriminator that achieves very high accuracy will produce relatively uninformative gradients. **In this work, we propose a simple and general technique to constrain information flow in the discriminator by means of an information bottleneck.** By enforcing a constraint on the mutual information between the observations and the discriminator’s internal representation, we can effectively modulate the discriminator’s accuracy and maintain useful and informative gradients. We demonstrate that our proposed variational discriminator bottleneck (VDB) leads to significant improvements across three distinct application areas for adversarial learning algorithms. Our primary evaluation studies the applicability of the VDB to imitation learning of dynamic continuous control skills, such as running. **We show that our method can learn such skills directly from raw video demonstrations, substantially outperforming prior adversarial imitation learning methods.** The VDB can also be combined with adversarial inverse reinforcement learning to learn parsimonious reward functions that can be transferred and re-optimized in new settings. Finally, we demonstrate that VDB can train GANs more effectively for image generation, improving upon a number of prior stabilization methods.
+
+- Adversarial learning methods have been proposed for a wide range of applications, but the training of adversarial models can be notoriously unstable. (적대적 학습(adversarial learning) 방법은 다양한 응용 분야에서 제안 되어 왔지만, 학습은 매우 불안정해 질 수 있다)
+- In this work, we propose a simple and general technique to constrain information flow in the discriminator by means of an information bottleneck. (이 연구에서 정보 병목(information bottleneck)을 사용해서 판별자(discriminator) 내의 정보 흐름을 제한하는 일반적인 기법을 제안한다.)
+- We show that our method can learn such skills directly from raw video demonstrations, substantially outperforming prior adversarial imitation learning methods. (제안된 방법은 비디오 시연에서 직접 학습할 수 있고, 기존 적대적 모방 학습 방법을 상당히 능가하는 것을 보여준다.)
+# 1. Introduction
+# 2. Related Work
+# 3. Preliminaries
+
+
+
+# A. Prior Knowledge
+
 ## GAN (Gernative Adversarial Network)
 GAN은 생성자(Genertor)와 판별자(Discriminator)라는 두 개의 신경망이 경쟁적으로 학습하는 구조를 의미한다. 생성자는 데이터를 생성하고, 판별자는 생성된 데이터가 진짜(real)인지 가짜(fake)인지 판별한다. GAN의 목표는 생성자가 판별자를 속일 수 있을만큼 진짜 같은 데이터를 생성하는 것이다.
 
